@@ -8,8 +8,17 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import process from "node:process";
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+// const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!,
+    {
+        db: process.env.POSTGRES_DB,
+        user: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        port: Number(process.env.POSTGRES_PORT) ?? 5432,
+        //ssl: 'require'
+    });
 
 export async function fetchRevenue() {
   try {
